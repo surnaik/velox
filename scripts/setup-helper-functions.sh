@@ -43,7 +43,7 @@ function github_checkout {
   shift
   local GIT_CLONE_PARAMS=$@
   local DIRNAME=$(basename $REPO)
-  SUDO="${SUDO:-""}"
+  SUDO="${SUDO:-"sudo --preserve-env"}"
   cd "${DEPENDENCY_DIR}"
   if [ -z "${DIRNAME}" ]; then
     echo "Failed to get repo name from ${REPO}"
@@ -172,7 +172,7 @@ function cmake_install {
   fi
   local NAME=$(basename "$(pwd)")
   local BINARY_DIR=_build
-  SUDO="${SUDO:-""}"
+  SUDO="${SUDO:-"sudo --preserve-env"}"
   pushd "${DIR}"
   if [ -d "${BINARY_DIR}" ] && prompt "Do you want to rebuild ${NAME}?"; then
     ${SUDO} rm -rf "${BINARY_DIR}"
