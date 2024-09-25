@@ -46,7 +46,7 @@ function github_checkout {
   shift
   local GIT_CLONE_PARAMS=$@
   local DIRNAME=$(basename $REPO)
-  SUDO="${SUDO:-""}"
+  SUDO="${SUDO:-"sudo --preserve-env"}"
   cd "${DEPENDENCY_DIR}"
   if [ -z "${DIRNAME}" ]; then
     echo "Failed to get repo name from ${REPO}"
@@ -161,7 +161,7 @@ function wget_and_untar {
   local DIR=$2
   mkdir -p "${DEPENDENCY_DIR}"
   pushd "${DEPENDENCY_DIR}"
-  SUDO="${SUDO:-""}"
+  SUDO="${SUDO:-"sudo --preserve-env"}"
   if [ -d "${DIR}" ]; then
     if prompt "${DIR} already exists. Delete?"; then
       ${SUDO} rm -rf "${DIR}"
@@ -189,7 +189,7 @@ function cmake_install_dir {
 function cmake_install {
   local NAME=$(basename "$(pwd)")
   local BINARY_DIR=_build
-  SUDO="${SUDO:-""}"
+  SUDO="${SUDO:-"sudo --preserve-env"}"
   if [ -d "${BINARY_DIR}" ]; then
     if prompt "Do you want to rebuild ${NAME}?"; then
       ${SUDO} rm -rf "${BINARY_DIR}"
