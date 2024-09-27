@@ -24,6 +24,7 @@ source $SCRIPTDIR/setup-helper-functions.sh
 DEPENDENCY_DIR=${DEPENDENCY_DIR:-$(pwd)/deps-download}
 CMAKE_BUILD_TYPE="${BUILD_TYPE:-Release}"
 MACHINE=$(uname -m)
+SUDO="${SUDO:-"sudo --preserve-env"}"
 
 if [[ "$OSTYPE" == darwin* ]]; then
   export INSTALL_PREFIX=${INSTALL_PREFIX:-"$(pwd)/deps-install"}
@@ -161,7 +162,7 @@ function install_hdfs_deps {
     cp -a ${DEPENDENCY_DIR}/hadoop /usr/local/
     wget -P /usr/local/hadoop/share/hadoop/common/lib/ https://repo1.maven.org/maven2/junit/junit/4.11/junit-4.11.jar
 
-    yum install -y java-1.8.0-openjdk-devel
+    ${SUDO} yum install -y java-1.8.0-openjdk-devel
     
   fi
   cmake_install_dir $libhdfs3_dir
@@ -175,23 +176,23 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
    # information and is available everywhere
    LINUX_DISTRIBUTION=$(. /etc/os-release && echo ${ID})
    if [[ "$LINUX_DISTRIBUTION" == "ubuntu" || "$LINUX_DISTRIBUTION" == "debian" ]]; then
-      apt install -y --no-install-recommends libxml2-dev libgsasl7-dev uuid-dev
+      ${SUDO} apt install -y --no-install-recommends libxml2-dev libgsasl7-dev uuid-dev
       # Dependencies of GCS, probably a workaround until the docker image is rebuilt
-      apt install -y --no-install-recommends libc-ares-dev libcurl4-openssl-dev
+      ${SUDO} apt install -y --no-install-recommends libc-ares-dev libcurl4-openssl-dev
       # Dependencies of Azure Storage Blob cpp
-      apt install -y openssl
+      ${SUDO} apt install -y openssl
    else # Assume Fedora/CentOS
-      dnf -y install libxml2-devel libgsasl-devel libuuid-devel krb5-devel
+      ${SUDO} dnf -y install libxml2-devel libgsasl-devel libuuid-devel krb5-devel
       # Dependencies of GCS, probably a workaround until the docker image is rebuilt
-      dnf -y install npm curl-devel c-ares-devel
+      ${SUDO} dnf -y install npm curl-devel c-ares-devel
       # Dependencies of Azure Storage Blob Cpp
-      dnf -y install perl-IPC-Cmd
-      dnf -y install openssl
+      ${SUDO} dnf -y install perl-IPC-Cmd
+      ${SUDO} dnf -y install openssl
    fi
 fi
 
 if [[ "$OSTYPE" == darwin* ]]; then
-   brew install libxml2 gsasl
+   ${SUDO} brew install libxml2 gsasl
 fi
 
 install_aws=0
