@@ -142,8 +142,8 @@ function install_protobuf {
     cd ${DEPENDENCY_DIR}/protobuf
     ./configure CXXFLAGS="-fPIC" --prefix=${INSTALL_PREFIX}
     make "-j${NPROC}"
-    make install
-    ldconfig
+    ${SUDO} make install
+    ${SUDO} ldconfig
   )
 }
 
