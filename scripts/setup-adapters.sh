@@ -85,9 +85,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
    # information and is available everywhere
    LINUX_DISTRIBUTION=$(. /etc/os-release && echo ${ID})
    if [[ "$LINUX_DISTRIBUTION" == "ubuntu" ]]; then
-      apt install -y --no-install-recommends libxml2-dev libgsasl7-dev uuid-dev
+      sudo apt install -y --no-install-recommends libxml2-dev libgsasl7-dev uuid-dev
       # Dependencies of GCS, probably a workaround until the docker image is rebuilt
-      apt install -y --no-install-recommends libc-ares-dev libcurl4-openssl-dev
+      sudo apt install -y --no-install-recommends libc-ares-dev libcurl4-openssl-dev
    else # Assume Fedora/CentOS
       yum -y install libxml2-devel libgsasl-devel libuuid-devel
       # Dependencies of GCS, probably a workaround until the docker image is rebuilt
