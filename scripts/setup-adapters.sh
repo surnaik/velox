@@ -176,11 +176,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
    # information and is available everywhere
    LINUX_DISTRIBUTION=$(. /etc/os-release && echo ${ID})
    if [[ "$LINUX_DISTRIBUTION" == "ubuntu" || "$LINUX_DISTRIBUTION" == "debian" ]]; then
-      apt install -y --no-install-recommends libxml2-dev libgsasl7-dev uuid-dev
+      sudo apt install -y --no-install-recommends libxml2-dev libgsasl7-dev uuid-dev
       # Dependencies of GCS, probably a workaround until the docker image is rebuilt
-      apt install -y --no-install-recommends libc-ares-dev libcurl4-openssl-dev
+      sudo apt install -y --no-install-recommends libc-ares-dev libcurl4-openssl-dev
       # Dependencies of Azure Storage Blob cpp
-      apt install -y openssl
+      sudo apt install -y openssl
    else # Assume Fedora/CentOS
       dnf -y install libxml2-devel libgsasl-devel libuuid-devel krb5-devel
       # Dependencies of GCS, probably a workaround until the docker image is rebuilt
